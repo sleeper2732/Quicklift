@@ -1,0 +1,68 @@
+/* QuickLift Log - minimal, clean UI */
+:root{
+  --bg:#111216;
+  --card:#191b22;
+  --muted:#9aa0a6;
+  --text:#e8eaed;
+  --accent:#7aa2ff;
+  --accent-2:#51d1b6;
+  --danger:#ff6b6b;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+  background: linear-gradient(180deg, #0f1116 0%, #14161b 100%);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.app-header, .app-footer{
+  position:sticky; top:0;
+  display:flex; gap:.5rem; align-items:center; justify-content:space-between;
+  background:rgba(15,17,22,.8); backdrop-filter: blur(10px);
+  padding: .8rem 1rem; z-index:10; border-bottom:1px solid rgba(255,255,255,0.06);
+}
+.app-footer{ top:auto; bottom:0; border-top:1px solid rgba(255,255,255,.06); border-bottom:0}
+h1{font-size:1.25rem; margin:0}
+h2{font-size:1rem; margin:.2rem 0 .6rem 0}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono)}
+.ghost{background:transparent; border:1px solid rgba(255,255,255,.12); color:var(--text)}
+.primary{background:linear-gradient(90deg, var(--accent), var(--accent-2)); border:0; color:#101217}
+.danger{border-color: var(--danger); color: var(--danger)}
+button{
+  border-radius:10px; padding:.6rem .9rem; cursor:pointer; font-weight:600;
+}
+button:active{transform:translateY(1px)}
+input, select{
+  width:100%; padding:.6rem .7rem; border-radius:10px; border:1px solid rgba(255,255,255,.12);
+  background:#0f1218; color:var(--text)
+}
+.tabs{
+  position:sticky; top:48px; display:flex; gap:.5rem; padding:.5rem 1rem; background:rgba(15,17,22,.7); backdrop-filter: blur(8px);
+}
+.tab{ flex:1; text-align:center; background:#151822; border:1px solid rgba(255,255,255,.08)}
+.tab.active{ outline:2px solid var(--accent); background:#0f1218}
+main{ padding:1rem; padding-bottom:4rem}
+.view{ display:none}
+.view.active{ display:block}
+.card{
+  background: var(--card); border:1px solid rgba(255,255,255,.08); border-radius: var(--radius);
+  padding: .9rem; margin: .9rem 0;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.04);
+}
+.row{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin:.2rem 0 .6rem 0}
+.grid2{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:.6rem}
+.grid4{ display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:.6rem}
+#todayPlan .ex{ padding:.5rem; border:1px dashed rgba(255,255,255,.1); border-radius:10px; margin:.4rem 0}
+#todayPlan .ex .target{ color: var(--muted); font-size:.9rem}
+#todayLog .entry{ padding:.5rem .6rem; border-bottom:1px solid rgba(255,255,255,.06); display:flex; gap:.6rem; align-items:center; justify-content:space-between}
+#historyList .hentry{ padding:.5rem .6rem; border-bottom:1px dashed rgba(255,255,255,.07)}
+small.badge{ background: rgba(122,162,255,.15); border:1px solid rgba(122,162,255,.4); color:var(--text); padding:.1rem .4rem; border-radius:999px; font-size:.7rem}
+@media (max-width: 900px){
+  .grid4{ grid-template-columns: repeat(2,minmax(0,1fr))}
+}

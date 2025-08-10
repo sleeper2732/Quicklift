@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#1e1e22"/>
+  <title>QuickLift Log</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="app.js" type="module"></script>
+</head>
+<body>
+  <header class="app-header">
+    <h1>QuickLift Log</h1>
+    <button id="installBtn" class="ghost" title="Install">➕ Install</button>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Primary">
+    <button class="tab active" data-tab="today">Today</button>
+    <button class="tab" data-tab="history">History</button>
+    <button class="tab" data-tab="charts">Charts</button>
+    <button class="tab" data-tab="plan">Plan</button>
+    <button class="tab" data-tab="settings">Export/Import</button>
+  </nav>
+
+  <main>
+    <section id="today" class="view active" aria-labelledby="Today">
+      <div class="row">
+        <div>
+          <label for="date">Date</label>
+          <input id="date" type="date"/>
+        </div>
+        <div>
+          <label for="session">Session</label>
+          <select id="session">
+            <option value="AM">AM (Strength)</option>
+            <option value="PM">PM (Explosive)</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="todayPlanWrap" class="card">
+        <div class="row">
+          <h2>Session Exercises</h2>
+          <button id="reloadPlan" class="ghost">↻</button>
+        </div>
+        <div id="todayPlan"></div>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <h2>Log Set</h2>
+          <button id="useLast" class="ghost" title="Use last set values for this exercise">⤴︎ Last</button>
+        </div>
+        <div class="grid2">
+          <label>Exercise
+            <select id="exerciseSelect"></select>
+          </label>
+          <label>Set #
+            <input id="setNum" type="number" min="1" value="1"/>
+          </label>
+          <label>Weight
+            <input id="weight" type="number" step="0.5" min="0" placeholder="lbs"/>
+          </label>
+          <label>Reps
+            <input id="reps" type="number" min="1" placeholder="reps"/>
+          </label>
+          <label>RPE
+            <input id="rpe" type="number" step="0.5" min="1" max="10" placeholder="1-10"/>
+          </label>
+          <label>Notes
+            <input id="notes" type="text" placeholder="optional"/>
+          </label>
+        </div>
+        <div class="row">
+          <button id="saveSet" class="primary">Save Set</button>
+          <button id="startRest" class="ghost">⏱ Start Rest</button>
+          <span id="restTimer" class="mono"></span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row">
+          <h2>Today’s Sets</h2>
+          <button id="clearToday" class="ghost danger">Clear</button>
+        </div>
+        <div id="todayLog"></div>
+      </div>
+    </section>
+
+    <section id="history" class="view" aria-labelledby="History">
+      <div class="card">
+        <div class="row">
+          <h2>Recent Workouts</h2>
+          <input id="historySearch" type="search" placeholder="Filter by exercise name..."/>
+        </div>
+        <div id="historyList"></div>
+      </div>
+    </section>
+
+    <section id="plan" class="view" aria-labelledby="Plan">
+      <div class="card">
+        <h2>Your Weekly Plan</h2>
+        <p class="muted">Add your own exercises below. Defaults are examples you can edit/delete. Morning (AM) for strength, Evening (PM) for explosiveness.</p>
+        <div class="grid4">
+          <label>Day
+            <select id="plDay"></select>
+          </label>
+          <label>Session
+            <select id="plSession">
+              <option>AM</option>
+              <option>PM</option>
+            </select>
+          </label>
+          <label>Exercise
+            <input id="plName" placeholder="e.g., Back Squat"/>
+          </label>
+          <label>Target (sets x reps @ RPE, rest s)
+            <input id="plTarget" placeholder="3x3 @8, rest 180"/>
+          </label>
+        </div>
+        <div class="row">
+          <button id="addToPlan" class="primary">Add Exercise</button>
+          <button id="clearPlan" class="ghost danger">Reset to Blank</button>
+          <button id="seedPlan" class="ghost">Load Example Plan</button>
+        </div>
+        <div id="planView"></div>
+      </div>
+    </section>
+
+
+    <section id="charts" class="view" aria-labelledby="Charts">
+      <div class="card">
+        <div class="row">
+          <h2>Progress</h2>
+          <select id="chartExercise"></select>
+        </div>
+        <canvas id="chartCanvas" width="900" height="360" style="width:100%;height:auto;border-radius:10px;background:#0f1218;border:1px solid rgba(255,255,255,.08)"></canvas>
+        <p class="muted">Chart shows estimated 1RM (Epley: weight×(1+reps/30)) over time for the selected exercise. Log sets to populate.</p>
+      </div>
+    </section>
+
+
+    <section id="settings" class="view" aria-labelledby="Export Import">
+      <div class="card">
+        <h2>Data</h2>
+        <div class="row">
+          <button id="exportJSON" class="primary">Export JSON</button>
+          <input id="importFile" type="file" accept="application/json"/>
+          <button id="importJSON">Import</button>
+        </div>
+        <p class="muted">Exports include your plan and all logged sets. Keep a backup if you reinstall the app.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span class="muted">Offline-ready • Data stays on your device</span>
+  </footer>
+</body>
+</html>
